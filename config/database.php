@@ -38,6 +38,21 @@ function prepararBaseDatos($conexion) {
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci"
     );
 
+    $conexion->exec(
+        "CREATE TABLE IF NOT EXISTS password_resets (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            usuario_id INT NOT NULL,
+            token VARCHAR(64) NOT NULL UNIQUE,
+            usado TINYINT(1) NOT NULL DEFAULT 0,
+            fecha_expiracion DATETIME NOT NULL,
+            fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            CONSTRAINT fk_password_resets_usuarios
+                FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+                ON UPDATE CASCADE
+                ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci"
+    );
+
     $columnaPassword = $conexion->query("SHOW COLUMNS FROM usuarios LIKE 'password'")->fetch();
     if (!$columnaPassword) {
         $conexion->exec("ALTER TABLE usuarios ADD password VARCHAR(255) DEFAULT NULL AFTER correo");
