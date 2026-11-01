@@ -159,6 +159,10 @@ if ($formularioEnviado) {
         </form>
 
         <p class="auth-switch">
+          <a href="recuperar.php">Olvid&oacute; su contrase&ntilde;a?</a>
+        </p>
+
+        <p class="auth-switch">
           &iquest;Todav&iacute;a no tiene cuenta?
           <a href="../signup/">Crear cuenta</a>
         </p>
